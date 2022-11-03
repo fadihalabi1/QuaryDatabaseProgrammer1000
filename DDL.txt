@@ -1,0 +1,92 @@
+Create Database Programmar1000
+use Programmar1000;
+
+Create Table Role( RoleId int Primary Key identity(1,1),
+RoleName nvarchar(50)not Null)
+
+Create Table Users( UserId int Primary Key identity(1,1),
+UserName nvarchar(50)not Null,Pasword nvarchar(50) )
+
+Create Table RoleUsers( RoleUserId int Primary Key identity(1,1),
+RoleId int ,UserId int,
+foreign key(RoleId) references Role(RoleId),
+foreign key(UserId) references Users(UserId),
+)
+Create Table Univercity( UnivercityId int Primary Key identity(1,1),
+                        UnivercityName nvarchar(50)not Null,
+					    UnivercityLocatoin nvarchar(50))
+Create Table Colage( ColageId int Primary Key identity(1,1),
+                     ColageName nvarchar(50)not Null,
+                     spechalest nvarchar(20) unique)		
+Create Table ColageUnivercity( ColageUnId int Primary Key identity(1,1),
+                        UnivercityId int ,ColageId int ,
+						foreign key(UnivercityId ) references  Univercity(UnivercityId ),
+                        foreign key( ColageId) references  Colage( ColageId),
+						YearLevel int ,)
+Create Table Courses( CourseId int Primary Key identity(1,1),
+                      CourseName nvarchar(50)not Null ,
+					  HourseNumber int )
+
+Create Table Students( StudentsId int Primary Key identity(1,1),
+                     StudentsName  nvarchar(50),StudentsAge int,
+                    UserId int ,UnivercityId int  ,ColageId int
+					foreign key(UserId) references Users(UserId),
+					foreign key(UnivercityId ) references  Univercity(UnivercityId ),
+                        foreign key( ColageId) references  Colage( ColageId))
+
+Create Table CoursesStudents(CourseStudentsId int Primary Key identity(1,1),
+                             StudentsId int,CourseId int,
+					foreign key( StudentsId ) references   Students( StudentsId ),
+                     foreign key( CourseId ) references Courses( CourseId ))
+							 
+
+Create Table Exam( ExamId int Primary Key identity(1,1),
+                    CourseId int ,StudentId int ,
+					foreign key(CourseId  ) references  Courses(CourseId  ),
+                    foreign key( StudentId ) references Students( StudentsId ),
+					Degray int,IsPassed Binary)
+Create Table Lectures( LecturesId int Primary Key identity(1,1),
+                     LecturesName  nvarchar(50),
+					 DurationOfLectures int,CourseId int,
+					 foreign key(CourseId  ) references  Courses(CourseId  ))
+
+Create Table Homeworks(HomeworksId int Primary Key identity(1,1),
+                      StudentsId int,LecturesId int,
+					  HomeworkDegrey int,Comment nvarchar(50),
+					  StartTime Datetime,EndTime  Datetime,
+					  foreign key( StudentsId ) references   Students( StudentsId ),
+                     foreign key( LecturesId ) references Lectures(LecturesId),
+					 )
+
+Create Table Sesson(SessonId int Primary Key identity(1,1),
+                      StudentsId int,LecturesId int,
+					  NumberHours int,
+					  foreign key( StudentsId ) references   Students( StudentsId ),
+                     foreign key( LecturesId ) references Lectures(LecturesId),
+					 )
+
+ Create Table Techaer(TechaerId int Primary Key identity(1,1),
+                      TechaerName nvarchar(20),UserId int,
+					   foreign key( UserId ) references Users( UserId ))
+
+Create Table CoursesTechaer(CourseTechaerId int Primary Key identity(1,1),
+                             TechaerId int,CourseId int,
+					foreign key( TechaerId  ) references  Techaer( TechaerId ),
+                     foreign key( CourseId ) references Courses( CourseId ))
+		
+Create Table Experyances( ExperyanceId int Primary Key identity(1,1),
+                    ExperyanceName  nvarchar(50)
+					)
+
+Create Table ExperyancesTechaer( ExperyanceTechaerId int Primary Key identity(1,1),
+                    ExperyanceId int,TechaerId int,
+					CompanyName  nvarchar(50),NumberOfYearExperyance int,
+					foreign key( TechaerId  ) references  Techaer( TechaerId ),
+                     foreign key(  ExperyanceId ) references  Experyances( ExperyanceId ))
+
+					 Create Table ExperyancesStudents( ExperyanceStudentsId int Primary Key identity(1,1),
+                    ExperyanceId int,StudentsId int,
+					CompanyName  nvarchar(50),NumberOfYearExperyance int,
+					foreign key( StudentsId ) references  Students(StudentsId),
+                     foreign key(  ExperyanceId ) references  Experyances( ExperyanceId ))
+					
